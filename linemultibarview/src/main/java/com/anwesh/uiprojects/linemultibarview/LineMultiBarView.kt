@@ -25,3 +25,32 @@ val delay : Long = 20
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
+
+fun Canvas.drawBar(i : Int, xGap : Float, hGap : Float, sc : Float, paint : Paint) {
+    val sci : Float = sc.divideScale(i, bars)
+    save()
+    translate(xGap * i,  hGap)
+    drawRect(RectF(-hGap * sci, 0f, xGap, hGap * sci), paint)
+    restore()
+}
+
+fun Canvas.drawLineMutliBar(i : Int, w : Float, h : Float, scale : Float, paint : Paint) {
+    val xGap : Float = w / nodes
+    val hGap : Float = h / nodes
+    save()
+    translate(0f, hGap * i)
+    for (j in 0..(bars - 1)) {
+        drawBar(j, xGap, hGap, scale.divideScale(1, 2), paint)
+    }
+    drawLine(0f, hGap, w * scale.divideScale(0, 2), hGap, paint)
+    restore()
+}
+
+fun Canvas.drawLMBNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = foreColor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    drawLineMutliBar(i, w, h, scale, paint)
+}
