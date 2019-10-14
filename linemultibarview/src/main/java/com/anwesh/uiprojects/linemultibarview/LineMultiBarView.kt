@@ -207,4 +207,13 @@ class LineMultiBarView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : LineMultiBarView {
+            val view : LineMultiBarView = LineMultiBarView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
