@@ -184,4 +184,26 @@ class LineMultiBarView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : LineMultiBarView) {
+
+        private val animator : Animator = Animator(view)
+        private val lmb : LineMultiBar = LineMultiBar(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            lmb.draw(canvas, paint)
+            animator.animate {
+                lmb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            lmb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
