@@ -17,7 +17,6 @@ val nodes : Int = 5
 val bars : Int = 5
 val scGap : Float = 0.01f
 val strokeFactor : Int = 90
-val sizeFactor : Float = 2.9f
 val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Long = 20
@@ -30,7 +29,7 @@ fun Canvas.drawBar(i : Int, xGap : Float, hGap : Float, sc : Float, paint : Pain
     val sci : Float = sc.divideScale(i, bars)
     save()
     translate(xGap * i,  hGap)
-    drawRect(RectF(-hGap * sci, 0f, xGap, hGap * sci), paint)
+    drawRect(RectF(0f, -hGap * sci, xGap, 0f), paint)
     restore()
 }
 
